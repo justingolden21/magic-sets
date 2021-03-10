@@ -3,7 +3,7 @@ $(()=> {
 		let sets = res.data;
 		let html = '';
 		for(let set of sets) {
-			html += `<div class="set" title="${set.name}" onclick="openSet('${set.search_uri}', '${set.icon_svg_uri}', '${set.code}', '${set.name}')">
+			html += `<div class="set" tabindex="0" title="${set.name}" onclick="openSet('${set.search_uri}', '${set.icon_svg_uri}', '${set.code}', '${set.name}')">
 				<img src="${set.icon_svg_uri}" width="32px">
 				<p class="set-code">${set.code.toUpperCase()}</p>
 				<p class="set-name">${set.name}</p>
@@ -12,6 +12,10 @@ $(()=> {
 		$('#sets').append(html);
 		$('#loading').hide();
 	});
+
+
+	// when enter key is pressed, click focused element
+	$(document).keyup(e=> { if(e.keyCode==13) document.activeElement.click(); });
 
 });
 
@@ -52,7 +56,7 @@ function openSet(uri, icon, code, name) {
 			else if(card.image_uris.small) html += `<img class="card" src="${card.image_uris.small}">`;
 		}
 		if(errorCards.length!=0) html += `<p>The following card images could not be found: ${errorCards.join(', ')}</p>`;
-		$('body').append(`<div class="overlay"><button class="close" onclick="closeOverlay()">&times;</button>${html}</div>`);
+		$('body').append(`<div class="overlay"><button class="close" onclick="closeOverlay()" tabindex="0">&times;</button>${html}</div>`);
 		$('#sets').hide();
 		$('#loading').hide();
 	}).catch(err => {
