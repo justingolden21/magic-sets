@@ -26,6 +26,7 @@ function openSet(uri, icon, code, name) {
 		// todo: sorting and searching (using name, colors, rarity, mana cost)
 		// todo: click to get art crop
 		// todo: card size view options
+		// todo: filter types of sets (main sets, promos, etc)
 		// console.log(set[0].name);
 		// console.log(set[0].colors);
 		// console.log(set[0].rarity);
