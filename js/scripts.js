@@ -22,6 +22,10 @@ function openSet(uri, icon, code, name) {
 		let html = `<img src="${icon}" width="32px">
 		<p class="set-code">${code.toUpperCase()}</p>
 		<p class="set-name">${name}</p>`;
+		let errorCards = [];
+		// todo: sorting and searching (using name, colors, rarity, mana cost)
+		// todo: click to get art crop
+		// todo: card size view options
 		// console.log(set[0].name);
 		// console.log(set[0].colors);
 		// console.log(set[0].rarity);
@@ -39,15 +43,22 @@ function openSet(uri, icon, code, name) {
 			// console.log(card.image_uris.small);
 			if(!card.image_uris) {
 				console.error('could not find image uris:', card, card.image_uris);
+				errorCards.push(card.name);
 				continue;
 			}
 			if(card.image_uris.normal) html += `<img class="card" src="${card.image_uris.normal}">`;
 			else if(card.image_uris.large) html += `<img class="card" src="${card.image_uris.large}">`;
 			else if(card.image_uris.small) html += `<img class="card" src="${card.image_uris.small}">`;
 		}
+		if(errorCards.length!=0) html += `<p>The following card images could not be found: ${errorCards.join(', ')}</p>`;
 		$('body').append(`<div class="overlay"><button class="close" onclick="closeOverlay()">&times;</button>${html}</div>`);
 		$('#sets').hide();
 		$('#loading').hide();
+	}).catch(err => {
+		$('#loading').hide();
+		closeOverlay();
+		console.log(err);
+		window.alert('An error occured. Could not get set info. Error ' + err.status);
 	});
 }
 
