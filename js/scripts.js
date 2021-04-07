@@ -1,4 +1,7 @@
 $(()=> {
+	let url = new URL(window.location.href);
+	let s = url.searchParams.get('s');
+
 	$.getJSON('https://api.scryfall.com/sets', function(res) {
 		let sets = res.data;
 		let html = '';
@@ -11,6 +14,16 @@ $(()=> {
 		}
 		$('#sets').append(html);
 		$('#loading').hide();
+
+		if(s) {
+			for(let set of sets) {
+				if(set.code.toUpperCase()==s.toUpperCase()) {
+					openSet(set.search_uri, set.icon_svg_uri, set.code, set.name);
+					break;
+				}
+			}
+			// setTimeout(()=> $(`.set .set-code:contains("${s.toUpperCase()}")`).click(), 1000);
+		}
 	});
 
 
@@ -20,6 +33,7 @@ $(()=> {
 });
 
 function openSet(uri, icon, code, name) {
+	history.replaceState({}, '', '?s=' + code.toUpperCase());
 	$('#loading').show();
 	$.getJSON(uri, function(res) {
 		let set = res.data;
@@ -72,4 +86,5 @@ function openSet(uri, icon, code, name) {
 function closeOverlay() {
 	$('.overlay').remove();
 	$('#sets').fadeIn();
+	history.replaceState({}, '', '?s=');
 }
