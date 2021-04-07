@@ -7,3 +7,5 @@ update url params, check for the set name on load (?s=abc)
 download all images option
 search by set or card option
 display card name / oracle text option
+
+night mode
