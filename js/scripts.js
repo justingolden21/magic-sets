@@ -40,6 +40,7 @@ function openSet(uri, icon, code, name) {
 		// console.log(set[0].image_uris.large);
 		// console.log(set[0].image_uris.normal);
 		// console.log(set[0].image_uris.small);
+		const art_only = $('#art-checkbox').is(':checked');
 		for(let card of set) {
 			// console.log(card);
 			// console.log(card.image_uris);
@@ -51,9 +52,10 @@ function openSet(uri, icon, code, name) {
 				errorCards.push(card.name);
 				continue;
 			}
-			if(card.image_uris.normal) html += `<img class="card" src="${card.image_uris.normal}">`;
-			else if(card.image_uris.large) html += `<img class="card" src="${card.image_uris.large}">`;
-			else if(card.image_uris.small) html += `<img class="card" src="${card.image_uris.small}">`;
+			if(art_only) html += `<img title="${card.name}" class="card" src="${card.image_uris.art_crop}">`
+			else if(card.image_uris.normal) html += `<img title="${card.name}" class="card" src="${card.image_uris.normal}">`;
+			else if(card.image_uris.large) html += `<img title="${card.name}" class="card" src="${card.image_uris.large}">`;
+			else if(card.image_uris.small) html += `<img title="${card.name}" class="card" src="${card.image_uris.small}">`;
 		}
 		if(errorCards.length!=0) html += `<p>The following card images could not be found: ${errorCards.join(', ')}</p>`;
 		$('body').append(`<div class="overlay"><button class="close" onclick="closeOverlay()" tabindex="0">&times;</button>${html}</div>`);

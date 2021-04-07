@@ -72,6 +72,7 @@ h1 {
 
 img.card {
 	width: 45vw;
+	margin: 0.5rem;
 }
 
 @media (min-width: 640px) { /* sm */
